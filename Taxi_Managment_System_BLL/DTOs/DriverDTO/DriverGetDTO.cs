@@ -10,9 +10,8 @@ namespace Taxi_Managment_System_BLL.DTOs.DriverDTO
     {
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
-        public DateOnly BirthDate { get; set; }
+        public DateTime BirthDate { get; set; }
         public string DrivingLicenceNumber { get; set; } = string.Empty;
-        public DateOnly ExpiryDate { get; set; }
-        public bool Working { get; set; }
+        public DateTime ExpiryDate { get; set; }
     }
 }

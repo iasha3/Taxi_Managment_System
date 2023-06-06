@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Taxi_Managment_System_DAL.Data.Configurations;
@@ -12,7 +13,7 @@ namespace Taxi_Managment_System_DAL.Data
 {
     public class DataContext : DbContext
     {
-        public DataContext(DbContextOptions options) : base(options) { }
+        public DataContext(DbContextOptions<DataContext> options) : base(options) { }
         public DbSet<Cab> Cabs { get; set; }
         public DbSet<CabRide> CabRides { get; set; }
         public DbSet<CabRideStatus> CabRideStatuses { get; set; }
@@ -22,15 +23,9 @@ namespace Taxi_Managment_System_DAL.Data
         public DbSet<Status> Statuses { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            new CabConfig().Configure(modelBuilder.Entity<Cab>());
-            new CabRideConfig().Configure(modelBuilder.Entity<CabRide>());
-            new CabRideStatusConfig().Configure(modelBuilder.Entity<CabRideStatus>());
-            new StatusConfig().Configure(modelBuilder.Entity<Status>());
-            new ShiftConfig().Configure(modelBuilder.Entity<Shift>());
-            new DriverConfig().Configure(modelBuilder.Entity<Driver>());
-            new PaymentTypeConfig().Configure(modelBuilder.Entity<PaymentType>());
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
-            DataGenerator.Generator();
+   /*         DataGenerator.Generator();
 
             modelBuilder.Entity<Cab>().HasData(DataGenerator.Cabs);
             modelBuilder.Entity<CabRide>().HasData(DataGenerator.CabRides);
@@ -38,7 +33,7 @@ namespace Taxi_Managment_System_DAL.Data
             modelBuilder.Entity<CabRideStatus>().HasData(DataGenerator.CabRideStatuses);
             modelBuilder.Entity<PaymentType>().HasData(DataGenerator.PaymentTypes);
             modelBuilder.Entity<Shift>().HasData(DataGenerator.Shifts);
-            modelBuilder.Entity<Status>().HasData(DataGenerator.Statuses);
+            modelBuilder.Entity<Status>().HasData(DataGenerator.Statuses);*/
         }
     }
 }

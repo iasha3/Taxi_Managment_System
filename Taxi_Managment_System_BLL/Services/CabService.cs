@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Taxi_Managment_System_BLL.DTOs.CabDTO;
 using Taxi_Managment_System_BLL.Services.Interfaces;
+using Taxi_Managment_System_DAL.Models;
+using Taxi_Managment_System_DAL.UnitOfWork;
 using Taxi_Managment_System_DAL.UnitOfWork.Interfaces;
 
 namespace Taxi_Managment_System_BLL.Services
@@ -18,25 +20,40 @@ namespace Taxi_Managment_System_BLL.Services
             _mapper = mapper; 
             _unitOfWork = unitOfWork;
         }
-        public Task<CabGetDTO> Create(CabCreateDTO entity)
+        public async Task<CabGetDTO> InsertEntityAsync(CabCreateDTO entity)
         {
+            var cab = await _unitOfWork.CabRepository.InsertEntityAsync(_mapper.Map<CabCreateDTO, Cab>(entity));
+            return _mapper.Map<Cab, CabGetDTO>(cab);
         }
 
-        public async Task<IEnumerable<CabGetDTO>> Delete(Guid id)
+        public async Task<IEnumerable<CabGetDTO>> DeleteEntityByIdAsync(Guid id)
         {
-            var cab = await _unitOfWork.
+            var cabs = await _unitOfWork.CabRepository.DeleteEntityByIdAsync(id);
+            return _mapper.Map<IEnumerable<Cab>, IEnumerable<CabGetDTO>>(cabs);
         }
 
-        public Task<CabGetDTO> Get(Guid id)
+        public async Task<CabGetDTO> GetEntityByIdAsync(Guid id)
         {
+            var cab = await _unitOfWork.CabRepository.GetEntityByIdAsync(id);
+            return _mapper.Map<Cab, CabGetDTO>(cab);
         }
 
-        public Task<IEnumerable<CabGetDTO>> Get_all_Information()
+        public async Task<IEnumerable<CabGetDTO>> GetAllInformationOfEntitiesAsync()
         {
+            var cabs = await _unitOfWork.CabRepository.GetAllInformationOfEntitiesAsync();
+            return _mapper.Map<IEnumerable<Cab>, IEnumerable<CabGetDTO>>(cabs);
         }
 
-        public Task<CabGetDTO> Update(Guid id, CabUpdateDTO entity)
+        public async Task<CabGetDTO> UpdateEntityByIdAsync(CabUpdateDTO entity)
         {
+            var cab = await _unitOfWork.CabRepository.UpdateEntityByIdAsync(_mapper.Map<CabUpdateDTO, Cab>(entity));
+            return _mapper.Map<Cab, CabGetDTO>(cab);
+        }
+
+        public async Task<IEnumerable<CabGetDTO>> SortByNameAsync()
+        {
+            var cabs = await _unitOfWork.CabRepository.SortByNameAsync();
+            return _mapper.Map<IEnumerable<Cab>, IEnumerable<CabGetDTO>>(cabs);
         }
     }
 }

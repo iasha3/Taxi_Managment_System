@@ -11,9 +11,8 @@ namespace Taxi_Managment_System_DAL.Models
     public class PaymentType:BaseEntity
     {
         public string NameType { get; set; } = string.Empty;
-        public override string ToString()
-        {
-            return JsonSerializer.Serialize(this, new JsonSerializerOptions { WriteIndented = true });
-        }
+        public ICollection<CabRide> CabRides { get; set; } = null!;
+
+       
     }
 }

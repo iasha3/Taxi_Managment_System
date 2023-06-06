@@ -14,9 +14,10 @@ namespace Taxi_Managment_System_DAL.Models
         public Guid CabId { get; set; }
         public DateTime ShiftStartTime { get; set; }
         public DateTime ShiftEndTime { get; set; }
-        public override string ToString()
-        {
-            return JsonSerializer.Serialize(this, new JsonSerializerOptions { WriteIndented = true });
-        }
+
+        public Driver Driver { get; set; } = null!;
+        public Cab Cab { get; set; } = null!;
+        public ICollection<CabRide> CabRides { get; set; } = null!; 
+        
     }
 }

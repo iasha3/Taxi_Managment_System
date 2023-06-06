@@ -8,5 +8,6 @@ namespace Taxi_Managment_System_BLL.DTOs
 {
     public class BaseEntityDTO
     {
+        public Guid Id { get; set; }
     }
 }

@@ -12,12 +12,9 @@ namespace Taxi_Managment_System_DAL.Models
     {
         public string LicensePlate { get; set; } = string.Empty;
         public int Manufacture_year { get; set; }
-        public bool Active { get; set; }
+        public bool Active { get; set; } = true;
         public string CarModel { get; set; } = string.Empty;
+        public ICollection<Shift> Shifts { get; set; } = null!;
 
-        public override string ToString()
-        {
-            return JsonSerializer.Serialize(this, new JsonSerializerOptions { WriteIndented = true });
-        }
     }
 }

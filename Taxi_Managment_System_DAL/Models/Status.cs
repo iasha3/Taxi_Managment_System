@@ -12,9 +12,7 @@ namespace Taxi_Managment_System_DAL.Models
     {
         public string StatusName { get; set; } = string.Empty;
 
-        public override string ToString()
-        {
-            return JsonSerializer.Serialize(this, new JsonSerializerOptions { WriteIndented = true });
-        }
+        public ICollection<CabRideStatus> CabRideStatuses { get; set; } = null!; 
+               
     }
 }

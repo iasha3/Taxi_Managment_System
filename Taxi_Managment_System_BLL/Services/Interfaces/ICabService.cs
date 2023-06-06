@@ -9,10 +9,11 @@ namespace Taxi_Managment_System_BLL.Services.Interfaces
 {
     public interface ICabService
     {
-        public Task<IEnumerable<CabGetDTO>> Get_all_Information();
-        public Task<CabGetDTO> Get(Guid id);
-        public Task<IEnumerable<CabGetDTO>> Delete(Guid id);
-        public Task<CabGetDTO> Update(Guid id, CabUpdateDTO entity);
-        public Task<CabGetDTO> Create(CabCreateDTO entity);
+        Task<IEnumerable<CabGetDTO>> GetAllInformationOfEntitiesAsync();
+        Task<CabGetDTO> GetEntityByIdAsync(Guid id);
+        Task<IEnumerable<CabGetDTO>> DeleteEntityByIdAsync(Guid id);
+        Task<CabGetDTO> UpdateEntityByIdAsync(CabUpdateDTO entity);
+        Task<CabGetDTO> InsertEntityAsync(CabCreateDTO entity);
+        Task<IEnumerable<CabGetDTO>> SortByNameAsync();
     }
 }

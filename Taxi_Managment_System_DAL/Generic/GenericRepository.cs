@@ -10,49 +10,62 @@ using Taxi_Managment_System_DAL.Models.Base;
 
 namespace Taxi_Managment_System_DAL.Generic
 {
-    public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : BaseEntity
+    public class GenericRepository<TEntity> : IGenericRepository<TEntity> 
+        where TEntity : BaseEntity
     {
 
-        private DataContext _db;
+        private DataContext _context;
         private DbSet<TEntity> _dbSet;
         public GenericRepository(DataContext context)
         {
-            _db = context;
+            _context = context;
             _dbSet = context.Set<TEntity>();
         }
-        public async Task<TEntity> Create(TEntity entity)
+        public async Task<TEntity> InsertEntityAsync(TEntity entity)
         {
-            _dbSet.Add(entity);
-            _db.SaveChanges();
-            var createEntity = await _dbSet.FindAsync(entity.Id);
-            return createEntity;
-        }
-
-        public async Task<IEnumerable<TEntity>> Delete(Guid id)
-        {
-            var entity2 = _dbSet.Find(id);
-            _dbSet.Remove(entity2);
-            await _db.SaveChangesAsync();
-            return await _dbSet.AsNoTracking().ToListAsync();
-        }
-
-        public async Task<TEntity> Get(Guid id)
-        {
-            var entity = await _dbSet.FindAsync(id);
+            await _dbSet.AddAsync(entity);
+            await _context.SaveChangesAsync();
             return entity;
         }
 
-        public async Task<IEnumerable<TEntity>> Get_all_Information()
+        public async Task<IEnumerable<TEntity>> DeleteEntityByIdAsync(Guid id)
         {
+            var result = await _dbSet.FirstOrDefaultAsync(x => x.Id == id);
+            if (result == null)
+            {
+                throw new Exception("Oops, not found");
+            }
+            _dbSet.Remove(result);
+            await _context.SaveChangesAsync();
             return await _dbSet.AsNoTracking().ToListAsync();
         }
 
-        public async Task<TEntity> Update(Guid id, TEntity entity)
+        public async Task<TEntity> GetEntityByIdAsync(Guid id)
         {
-            var updateEntity = await _dbSet.FindAsync(id);
-            _db.Entry(updateEntity).CurrentValues.SetValues(entity);
-            _db.SaveChanges();
-            return updateEntity;
+            var result = await _dbSet.FirstOrDefaultAsync(x => x.Id == id);
+            if (result == null)
+            {
+                throw new Exception("Oops, not found");
+            }
+            return result;
+        }
+
+        public async Task<IEnumerable<TEntity>> GetAllInformationOfEntitiesAsync()
+        {
+            return await _dbSet.AsNoTracking().ToListAsync();
+
+        }
+
+        public async Task<TEntity> UpdateEntityByIdAsync(TEntity entity)
+        {
+            var result = await _dbSet.AsNoTracking().FirstOrDefaultAsync(x => x.Id == entity.Id);
+            if (result == null)
+            {
+                throw new Exception("Oops, not found");
+            }
+            _dbSet.Entry(result).CurrentValues.SetValues(entity);
+            await _context.SaveChangesAsync();
+            return entity;
         }
     }
 }

@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Taxi_Managment_System_BLL.DTOs.DriverDTO
 {
-    public class DriverCreateDTO : BaseEntityDTO
+    public class DriverCreateDTO
     {
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
-        public DateOnly BirthDate { get; set; }
+        public DateTime BirthDate { get; set; }
         public string DrivingLicenceNumber { get; set; } = string.Empty;
-        public DateOnly ExpiryDate { get; set; }
+        public DateTime ExpiryDate { get; set; }
     }
 }

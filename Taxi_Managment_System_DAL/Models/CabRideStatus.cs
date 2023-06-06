@@ -12,10 +12,10 @@ namespace Taxi_Managment_System_DAL.Models
     {
         public DateTime StatusTime { get; set; }
         public Guid CabRideId { get; set; }
-        public Guid StatusCabRideId { get; set; }
-        public override string ToString()
-        {
-            return JsonSerializer.Serialize(this, new JsonSerializerOptions { WriteIndented = true });
-        }
+        public Guid StatusId { get; set; }
+
+        public CabRide CabRide { get; set; } = null!;
+        public Status Status { get; set; } = null!;
+        
     }
 }

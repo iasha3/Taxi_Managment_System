@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Taxi_Managment_System_BLL.DTOs.CabDTO
 {
-    public class CabCreateDTO :BaseEntityDTO
+    public class CabCreateDTO 
     {
         public string LicensePlate { get; set; } = string.Empty;
         public int Manufacture_year { get; set; }

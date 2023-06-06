@@ -12,13 +12,14 @@ namespace Taxi_Managment_System_DAL.Models
     {
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
-        public DateOnly BirthDate { get; set; }
+        public DateTime BirthDate { get; set; }
         public string DrivingLicenceNumber { get; set; } = string.Empty;
-        public DateOnly ExpiryDate { get; set;  }
+        public DateTime ExpiryDate { get; set;  }
         public bool Working { get; set; }
-        public override string ToString()
-        {
-            return JsonSerializer.Serialize(this, new JsonSerializerOptions { WriteIndented = true });
-        }
+
+
+        public ICollection<Shift> Shifts { get; set; } = null!;
+
+        
     }
 }
